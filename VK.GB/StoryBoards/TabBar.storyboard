@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Tod-Ik-4xe">
+    <device id="retina4_7" orientation="portrait">
+        <adaptation id="fullscreen"/>
+    </device>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Tab Bar Controller-->
+        <scene sceneID="uRG-nP-1MO">
+            <objects>
+                <tabBarController id="Tod-Ik-4xe" sceneMemberID="viewController">
+                    <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="zoc-IK-xaJ">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="49"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="cbZ-nn-5fy" kind="relationship" relationship="viewControllers" id="kO9-Bq-S00"/>
+                        <segue destination="O0Y-7n-moh" kind="relationship" relationship="viewControllers" id="q38-pL-hNa"/>
+                        <segue destination="Gd1-B5-nqc" kind="relationship" relationship="viewControllers" id="Gtp-zc-gx3"/>
+                    </connections>
+                </tabBarController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Uqx-HA-TeB" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1457" y="-25"/>
+        </scene>
+        <!--Friends-->
+        <scene sceneID="Tkh-io-Cnq">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Friends" id="cbZ-nn-5fy" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" image="friends" id="cRj-qF-vHs"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="PlA-iQ-rNv" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2002" y="-131"/>
+        </scene>
+        <!--Groups-->
+        <scene sceneID="ADA-sZ-oaO">
+            <objects>
+                <viewControllerPlaceholder storyboardName="Groups" id="O0Y-7n-moh" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" image="groups" id="lcJ-v2-Lrt"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Ajc-9O-hWo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2013" y="-26"/>
+        </scene>
+        <!--NewsFeed-->
+        <scene sceneID="k3C-D5-ylK">
+            <objects>
+                <viewControllerPlaceholder storyboardName="NewsFeed" id="Gd1-B5-nqc" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Item" image="newsicon" landscapeImage="newsicon" selectedImage="newsicon" id="ERY-5O-UJN"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vgI-xK-fhg" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2015" y="75"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="friends" width="30" height="30"/>
+        <image name="groups" width="30" height="30"/>
+        <image name="newsicon" width="30" height="30"/>
+    </resources>
+</document>
