@@ -31,8 +31,8 @@ class SetImageToRowTableView: Operation {
     
     private func setImage(_ image: UIImage, toCell cell: UITableViewCell) {
         if let newsCell = cell as? NewsFeedTableViewCell {
-            newsCell.imageFriend.image = image
-            newsCell.newsImage.image = image
+            newsCell.setPostAuthorImage(image: image)
+//            newsCell.newsImage.image = image
         } else if let myGroupsCell = cell as? MyGroupsTableViewCell {
             myGroupsCell.imageGroup.image = image
         } else if let allGroupsCell = cell as? AllGroupsTableViewCell {

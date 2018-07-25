@@ -15,8 +15,4 @@ class Groups: Object {
         name = json["name"].stringValue
         imageUrl = json["photo_100"].stringValue
     }
-    
-//    override static func primaryKey() -> String? {
-//        return "groupId"
-//    }
 }

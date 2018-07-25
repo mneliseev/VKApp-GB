@@ -3,13 +3,6 @@ import SwiftyJSON
 
 class News {
 
-    //Фотографии новостей
-    
-    var id: Int = 0
-    var ownerId: Int = 0
-    var smallImage: String = ""
-    var bigImage: String = ""
-    
     //Фото и название группы или пользователя
     var newsAuthor: String = ""
     var newsPhotoAuthor: String = ""
@@ -29,14 +22,27 @@ class News {
     
     init(json: JSON) {
 
-        newsText = json["text"].stringValue
         newsSourceId = json["source_id"].intValue
         postId = json["post_id"].intValue
         
-//        let unixTime = json["date"].doubleValue
-//        self.newsDate = timeAgoSince(unixTime)
+        newsText = json["text"].stringValue
+        if newsText == "" {
+            self.newsText = json["copy_history"][0]["text"].stringValue
+        }
         
-        attachmentsPhoto = json["attachments"][0]["photo"]["sizes"][3]["url"].stringValue
+        if let photoNews = json["attachments"][0]["photo"]["sizes"][3]["url"].string {
+            self.attachmentsPhoto = photoNews
+        } else if let photoNews = json["copy_history"][0]["attachments"][0]["doc"]["preview"]["photo"]["sizes"][2]["src"].string {
+            self.attachmentsPhoto = photoNews
+        } else if let photoNews = json["attachments"][0]["video"]["photo_640"].string {
+            self.attachmentsPhoto = photoNews
+        } else if let photoNews = json["copy_history"][0]["attachments"][0]["photo"]["sizes"][4]["url"].string {
+            self.attachmentsPhoto = photoNews
+        } else if let photoNews = json["attachments"][0]["link"]["photo"]["sizes"][5]["url"].string {
+            self.attachmentsPhoto = photoNews
+        } else {
+            self.attachmentsPhoto = ""
+        }
        
         newsCommentsCount = json["comments"]["count"].intValue
         newsLikesCount = json["likes"]["count"].intValue
@@ -55,11 +61,4 @@ class News {
         newsPhotoAuthor = json["photo_100"].stringValue
         newsPostId = json["id"].intValue
     }
-    
-//    init(jsonAttachment json: JSON) {
-//        id = json["attachments", 0, "photo", "id"].intValue
-//        ownerId = json["attachments", 0, "photo", "owner_id"].intValue
-//        smallImage = json["attachments", 0, "photo", "photo_130"].stringValue
-//        bigImage = json["attachments", 0, "photo", "photo_604"].stringValue
-//    }
 }
