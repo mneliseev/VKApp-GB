@@ -8,7 +8,7 @@ class AllGroupsRequest {
     let baseUrl = "https://api.vk.com"
     let path = "/method"
     
-    func getSearchGroupRequest(searchText: String, completion: @escaping ([Groups]) -> ()) {
+    func getSearchGroupRequest(searchText: String, completion: @escaping ([Group]) -> ()) {
         let pathMethod = "/groups.search"
         let url = baseUrl + path + pathMethod
         let parameters: Parameters = [
@@ -18,14 +18,14 @@ class AllGroupsRequest {
             "type": "group",
             "v":"5.73"
         ]
-        
-        Alamofire.request(url, method: .get, parameters: parameters).validate().responseJSON(queue: .global(qos: .userInteractive)) { response in
-            switch response.result {
-            case .success(let value):
-                let searchGroups = JSON(value)["response"]["items"].compactMap({ Groups(json: $0.1) })
-                completion(searchGroups)
-            case .failure(let error):
-                print(error)
+
+        Alamofire.request(url, parameters: parameters).responseData(queue: .global(qos: .userInteractive)) { response in
+            let json = response.data
+            do {
+                let myGroup = try JSONDecoder().decode(ResponseGroup.self, from: json!)
+                completion(myGroup.response.items)
+            } catch let jsonError {
+                print("Ошибка получения данных", jsonError)
             }
         }
     }

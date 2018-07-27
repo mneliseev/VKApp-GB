@@ -17,13 +17,14 @@ class MyGroupsRequest {
             "extended": "1",
             "v": "5.80"
         ]
-        Alamofire.request(url, method: .get, parameters: parametres).validate().responseJSON(queue: .global(qos: .userInteractive)) { response in
-            switch response.result {
-            case .success(let value):
-                let groups = JSON(value)["response"]["items"].compactMap({ Groups(json: $0.1) })
-                RealmActions.saveGroups(groups)
-            case .failure(let error):
-                print(error)
+        
+        Alamofire.request(url, parameters: parametres).responseData(queue: .global(qos: .userInteractive)) { response in
+            let json = response.data
+            do {
+                let myGroup = try JSONDecoder().decode(ResponseGroup.self, from: json!)
+                RealmActions.saveGroups(myGroup.response.items)
+            } catch let jsonError {
+                print("Ошибка получения данных", jsonError)
             }
         }
     }

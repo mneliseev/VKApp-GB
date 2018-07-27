@@ -3,11 +3,14 @@ import RealmSwift
 
 private let reuseIdentifier = "CellFriendsInfo"
 
-class InfoFriendsCollectionViewController: UICollectionViewController {
+class InfoFriendsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
 
     var token: NotificationToken?
     var userId = ""
-    var photosFriend: Results<Photos>!
+    var photosFriend: Results<Photos> = {
+        let realm = try? Realm()
+        return realm!.objects(Photos.self)
+    }()
     var idFriend = 0
     let photoRequest = PhotosRequest()
     
@@ -33,52 +36,44 @@ class InfoFriendsCollectionViewController: UICollectionViewController {
     }
 
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as! InfoFriendsCollectionViewCell
+        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? InfoFriendsCollectionViewCell
+        
+        guard let friendPhotoCell = cell else { return UICollectionViewCell() }
         
         let photo = photosFriend[indexPath.row]
-        
-        let getCacheImage = GetCacheImage(url: photo.photos)
-        let setImageToRow = SetImageToRowCollection(cell: cell, indexPath: indexPath, collectionView: collectionView)
+
+        let getCacheImage = GetCacheImage(url: photo.image)
+        let setImageToRow = SetImageToRowCollection(cell: friendPhotoCell, indexPath: indexPath, collectionView: collectionView)
         setImageToRow.addDependency(getCacheImage)
         queque.addOperation(getCacheImage)
         OperationQueue.main.addOperation(setImageToRow)
 
-        return cell
+        return friendPhotoCell
     }
     
-//    func pairTableAndRealm() {
-//        guard let realm = try? Realm() else { return }
-//        photosFriend = realm.objects(Photos.self)
-//        token = photosFriend.observe( { [weak self] (changes: RealmCollectionChange) in
-//            guard let collectionView = self?.collectionView else { return }
-//            switch changes {
-//            case .initial:
-//                collectionView.reloadData()
-//            case .update:
-//                collectionView.reloadData()
-//            case .error(let error):
-//                print(error.localizedDescription)
-//            }
-//        })
-//    }
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let cellSize = CGSize(width: (collectionView.bounds.width - 1)/2, height: 200)
+        return cellSize
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets
+    {
+        let sectionInset = UIEdgeInsetsMake(0, 0, 0, 0)
+        return sectionInset
+    }
     
     func pairTableAndRealm() {
-        guard let realm = try? Realm() else { return }
-        photosFriend = realm.objects(Photos.self)
-        token = photosFriend.observe( { [weak self] changes in
+        token = photosFriend.observe( { [weak self] (changes: RealmCollectionChange) in
             guard let collectionView = self?.collectionView else { return }
             switch changes {
             case .initial:
                 collectionView.reloadData()
-            case .update(_, let delete, let insert, let update):
-                collectionView.performBatchUpdates({
-                    collectionView.insertItems(at: insert.map { IndexPath(row: $0, section: 0) })
-                    collectionView.deleteItems(at: delete.map { IndexPath(row: $0, section: 0) })
-                    collectionView.reloadItems(at: update.map { IndexPath(row: $0, section: 0) })
-                }, completion: nil)
+            case .update:
+                collectionView.reloadData()
             case .error(let error):
                 print(error.localizedDescription)
             }
         })
     }
+
 }

@@ -26,6 +26,7 @@ class VKWebViewController: UIViewController {
         let navFriendsTVC = tabbarVC.viewControllers?.first as! UINavigationController
         let friendsTVC = navFriendsTVC.viewControllers.first as! FriendsTableViewController
         friendsTVC.userId = userId
+        friendsTVC.accessToken = accessToken
         
         let navGroupsTVC = tabbarVC.viewControllers?[1] as! UINavigationController
         let groupsTVC = navGroupsTVC.viewControllers.first as! MyGroupsTableViewController

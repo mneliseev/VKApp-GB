@@ -123,8 +123,8 @@
 		B50A597420F7438C00238C00 /* Groups */ = {
 			isa = PBXGroup;
 			children = (
-				B50A597520F743CD00238C00 /* AllGroups */,
 				B5A00EDC20F8256E00FF0041 /* InfoGroup */,
+				B50A597520F743CD00238C00 /* AllGroups */,
 				B5116B4F20D16CAC00DFD674 /* MyGroupsTableViewController.swift */,
 				B5116B5120D16CDB00DFD674 /* MyGroupsTableViewCell.swift */,
 			);

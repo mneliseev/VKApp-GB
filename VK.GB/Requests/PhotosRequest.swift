@@ -20,13 +20,13 @@ class PhotosRequest {
             "v":"5.60"
         ]
         
-        Alamofire.request(url, method: .get, parameters: parameters).validate().responseJSON(queue: .global(qos: .userInteractive)) { response in
-            switch response.result {
-            case .success(let value):
-                let photos = JSON(value)["response"]["items"].compactMap({ Photos(json: $0.1) })
-                RealmActions.savePhotos(photos)
-            case .failure(let error):
-                print(error)
+        Alamofire.request(url, parameters: parameters).responseData(queue: .global(qos: .userInteractive)) { response in
+            let json = response.data
+            do {
+                let userPhoto = try JSONDecoder().decode(ResponsePhotoFriends.self, from: json!)
+                RealmActions.savePhotos(userPhoto.response.items)
+            } catch let jsonError {
+                print("Ошибка получения данных", jsonError)
             }
         }
     }

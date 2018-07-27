@@ -1,18 +1,25 @@
 import Foundation
-import SwiftyJSON
+import Realm
 import RealmSwift
 
-class Groups: Object {
+class ResponseGroup: Codable {
+    let response: UserGroupsResponse
+}
+
+class UserGroupsResponse: Codable {
+    let count: Int
+    let items: [Group]
+}
+
+class Group: Object, Codable {
     
-    @objc dynamic var groupId: String = ""
+    @objc dynamic var id: Int = 0
     @objc dynamic var name: String = ""
-    @objc dynamic var imageUrl: String!
+    @objc dynamic var image: String = ""
     
-    convenience init(json: JSON) {
-        self.init()
-        
-        groupId = json["id"].stringValue
-        name = json["name"].stringValue
-        imageUrl = json["photo_100"].stringValue
+    public enum CodingKeys: String, CodingKey {
+        case id
+        case name
+        case image = "photo_100"
     }
 }

@@ -2,7 +2,7 @@ import UIKit
 
 class AllGroupsTableViewController: UITableViewController {
     
-    var allGroups = [Groups]()
+    var allGroups = [Group]()
     var searchRequest = AllGroupsRequest()
     var searchController = UISearchController(searchResultsController: nil)
     
@@ -18,7 +18,6 @@ class AllGroupsTableViewController: UITableViewController {
         title = "Все группы"
         
         searchGroups()
-        
         navigationItem.searchController = searchController
         navigationItem.hidesSearchBarWhenScrolling = false
         
@@ -32,10 +31,6 @@ class AllGroupsTableViewController: UITableViewController {
         }
     }
 
-    override func numberOfSections(in tableView: UITableView) -> Int {
-        return 1
-    }
-
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return allGroups.count
     }
@@ -44,14 +39,13 @@ class AllGroupsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellAllGroups", for: indexPath) as! AllGroupsTableViewCell
         
         let allGroup = allGroups[indexPath.row]
-        
-        cell.nameGroup.text = allGroup.name
+        cell.setNameFriend(text: allGroup.name)
 
-        let getCacheImage = GetCacheImage(url: allGroup.imageUrl)
+        let getCacheImage = GetCacheImage(url: allGroup.image)
         let setImageToRow = SetImageToRowTableView(cell: cell, indexPath: indexPath, tableView: tableView)
         setImageToRow.addDependency(getCacheImage)
         queque.addOperation(getCacheImage)
-        OperationQueue.main.addOperation(setImageToRow)        
+        OperationQueue.main.addOperation(setImageToRow)
         cell.imageGroup.layer.cornerRadius = 20
         cell.imageGroup.clipsToBounds = true
         
@@ -60,6 +54,10 @@ class AllGroupsTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
     }
     
     func searchGroups() {
@@ -80,7 +78,9 @@ extension AllGroupsTableViewController: UISearchResultsUpdating, UISearchBarDele
         
         searchRequest.getSearchGroupRequest(searchText: ((searchController.searchBar.text?.lowercased()))!, completion: { [weak self] (search) in
             self?.allGroups = search
-            self?.tableView?.reloadData()
+            DispatchQueue.main.async {
+                self?.tableView?.reloadData()
+            }
         })
     }
 }

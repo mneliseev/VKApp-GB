@@ -17,10 +17,10 @@ class RealmActions {
         }
     }
     
-    static func saveGroups(_ groups: [Groups]) {
+    static func saveGroups(_ groups: [Group]) {
         do {
             let realm = try Realm()
-            let oldGroups = realm.objects(Groups.self)
+            let oldGroups = realm.objects(Group.self)
             realm.beginWrite()
             realm.delete(oldGroups)
             realm.add(groups)
@@ -43,7 +43,7 @@ class RealmActions {
         }
     }
     
-    static func addGroupFromSearchToRealm(_ groups: [Groups]) {
+    static func addGroupFromSearchToRealm(_ groups: [Group]) {
         do {
             let realm = try Realm()
             try realm.write {
@@ -54,7 +54,7 @@ class RealmActions {
         }
     }
     
-    static func deleteGroup(_ groups: [Groups]) {
+    static func deleteGroup(_ groups: [Group]) {
         do {
             let realm = try Realm()
             realm.beginWrite()
@@ -77,16 +77,16 @@ class RealmActions {
     }
     
     
-    static func loadFriends() -> [Friends] {
-        do {
-            let realm = try Realm()
-            let users = realm.objects(Friends.self)
-            return Array(users)
-        } catch {
-            print(error)
-        }
-        return []
-    }
+//    static func loadFriends() -> [Friends] {
+//        do {
+//            let realm = try Realm()
+//            let users = realm.objects(Friends.self)
+//            return Array(users)
+//        } catch {
+//            print(error)
+//        }
+//        return []
+//    }
 
 //    static func loadPhotosData(userId: String, idFriends: Int) -> [Photos] {
 //        do {

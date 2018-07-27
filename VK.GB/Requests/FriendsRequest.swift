@@ -16,17 +16,17 @@ class FriendsRequest {
             "user_id": userId,
             "access_token": VKServices.token,
             "order": "name",
-            "fields": "uid, first_name, last_name, photo_100",
+            "fields": "last_name, first_name, photo_100",
             "v": "5.80"
         ]
-        
-        Alamofire.request(url, method: .get, parameters: parametres).validate().responseJSON(queue: .global(qos:.userInteractive)) { response in
-            switch response.result {
-            case .success(let value):
-                let users = JSON(value)["response"]["items"].compactMap({ Friends(json: $0.1) })
-                RealmActions.saveFriends(users)
-            case .failure(let error):
-                print(error)
+    
+        Alamofire.request(url, parameters: parametres).responseData(queue: .global(qos: .userInteractive)) { response in
+            let json = response.data
+            do {
+                let users = try JSONDecoder().decode(ResponseFriends.self, from: json!)
+                RealmActions.saveFriends(users.response.items)
+            } catch let jsonError {
+                print("Ошибка получения данных", jsonError)
             }
         }
     }
