@@ -8,6 +8,7 @@ class NewsFeedTableViewController: UITableViewController {
     var userId = ""
     let newsRequest = NewsFeedRequest()
     var heightCellCash: [IndexPath : CGFloat] = [:]
+    let cellSpacingHeight: CGFloat = 15
     
     let queque: OperationQueue = {
         let queque = OperationQueue()
@@ -27,10 +28,24 @@ class NewsFeedTableViewController: UITableViewController {
     
     // MARK: - Table view data source
     
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    override func numberOfSections(in tableView: UITableView) -> Int {
         return news.count
     }
     
+    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return 1
+    }
+
+    override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return cellSpacingHeight
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+        let headerView = UIView()
+        headerView.backgroundColor = #colorLiteral(red: 0.921431005, green: 0.9214526415, blue: 0.9214410186, alpha: 1)
+        return headerView
+    }
+
     override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         guard let height = heightCellCash[indexPath] else { return 44 }
         return height
@@ -39,7 +54,8 @@ class NewsFeedTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as! NewsFeedTableViewCell
         
-        let newsCell = news[indexPath.row]
+        let newsCell = news[indexPath.section]
+
         cell.index = indexPath
         cell.delegate = self
         
@@ -61,22 +77,21 @@ class NewsFeedTableViewController: UITableViewController {
             cell.imageFriend.image = nil
         }
 
-//        if newsCell.attachmentsPhoto == "" {
-//            cell.newsImage.isHidden = true
-//        } else {
-//            cell.newsImage.isHidden = false
-//            let getPostImage = GetCacheImage(url: newsCell.attachmentsPhoto)
-//            getPostImage.completionBlock = {
-//                OperationQueue.main.addOperation {
-//                    cell.newsImage.image = getPostImage.outputImage
-//                }
-//            }
-//            queque.addOperation(getPostImage)
-//        }
+        if newsCell.attachmentsPhoto == "" {
+            cell.newsImage.isHidden = true
+        } else {
+            cell.newsImage.isHidden = false
+            let getPostImage = GetCacheImage(url: newsCell.attachmentsPhoto)
+            getPostImage.completionBlock = {
+                OperationQueue.main.addOperation {
+                    cell.newsImage.image = getPostImage.outputImage
+                }
+            }
+            queque.addOperation(getPostImage)
+        }
         
         cell.newsDate.text = ""
-        cell.update()
-        
+
         return cell
     }
     

@@ -15,12 +15,12 @@ class VKServices {
         urlComponents.host = "oauth.vk.com"
         urlComponents.path = "/authorize"
         urlComponents.queryItems = [
-            URLQueryItem(name: "client_id", value: "6395279"),
+            URLQueryItem(name: "client_id", value: "6646817"),
             URLQueryItem(name: "display", value: "mobile"),
             URLQueryItem(name: "redirect_uri", value: "https://oauth.vk.com/blank.html"),
             URLQueryItem(name: "scope", value: "270342"),
             URLQueryItem(name: "response_type", value: "token"),
-            URLQueryItem(name: "v", value: "5.73")
+            URLQueryItem(name: "v", value: "5.80")
         ]
         
         let request = URLRequest(url: urlComponents.url!)
