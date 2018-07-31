@@ -3,92 +3,65 @@ import UIKit
 
 class NewsFeedTableViewCell: UITableViewCell {
     
+    @IBOutlet weak var imageFriend: UIImageView!
+    @IBOutlet weak var nameFriend: UILabel!
+    @IBOutlet weak var newsDate: UILabel!
+    @IBOutlet weak var newsText: UILabel!
+    @IBOutlet weak var newsImage: UIImageView!
+    @IBOutlet weak var newsLikesCount: UILabel!
+    @IBOutlet weak var newsRepostCount: UILabel!
+    @IBOutlet weak var newsCommentCount: UILabel!
+    @IBOutlet weak var newsViewCount: UILabel!
+    @IBOutlet weak var newsIconLikes: UIImageView!
+    @IBOutlet weak var newsIconRepost: UIImageView!
+    @IBOutlet weak var newsIconView: UIImageView!
+    @IBOutlet weak var newsIconComment: UIImageView!
+    @IBOutlet weak var postView: UIView!
+    
     weak var delegate: PostCellHeightDelegate?
     var index: IndexPath?
-    
-    @IBOutlet weak var imageFriend: UIImageView! {
-        didSet {
-            imageFriend.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-    @IBOutlet weak var nameFriend: UILabel! {
-        didSet {
-            nameFriend.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-    @IBOutlet weak var newsDate: UILabel! {
-        didSet {
-            newsDate.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-    @IBOutlet weak var newsText: UILabel! {
-        didSet {
-            newsText.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-    @IBOutlet weak var newsImage: UIImageView! {
-        didSet {
-            newsImage.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-    @IBOutlet weak var newsLikesCount: UILabel! {
-        didSet {
-            newsLikesCount.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-    @IBOutlet weak var newsRepostCount: UILabel! {
-        didSet {
-            newsRepostCount.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-    @IBOutlet weak var newsCommentCount: UILabel! {
-        didSet {
-            newsCommentCount.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-    @IBOutlet weak var newsViewCount: UILabel! {
-        didSet {
-            newsViewCount.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-    @IBOutlet weak var newsIconLikes: UIImageView! {
-        didSet {
-            newsIconLikes.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-    @IBOutlet weak var newsIconRepost: UIImageView! {
-        didSet {
-            newsIconRepost.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-    @IBOutlet weak var newsIconView: UIImageView! {
-        didSet {
-            newsIconView.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-    @IBOutlet weak var newsIconComment: UIImageView! {
-        didSet {
-            newsIconComment.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-    
     
     let insets: CGFloat = 10.0
     let insetsX: CGFloat = 5.0
     
      //MARK: - Functions
     override func layoutSubviews() {
+        imageFriend.translatesAutoresizingMaskIntoConstraints = false
+        nameFriend.translatesAutoresizingMaskIntoConstraints = false
+        newsDate.translatesAutoresizingMaskIntoConstraints = false
+        newsText.translatesAutoresizingMaskIntoConstraints = false
+        newsImage.translatesAutoresizingMaskIntoConstraints = false
+        newsLikesCount.translatesAutoresizingMaskIntoConstraints = false
+        newsRepostCount.translatesAutoresizingMaskIntoConstraints = false
+        newsCommentCount.translatesAutoresizingMaskIntoConstraints = false
+        newsViewCount.translatesAutoresizingMaskIntoConstraints = false
+        newsIconLikes.translatesAutoresizingMaskIntoConstraints = false
+        newsIconRepost.translatesAutoresizingMaskIntoConstraints = false
+        newsIconView.translatesAutoresizingMaskIntoConstraints = false
+        newsIconComment.translatesAutoresizingMaskIntoConstraints = false
+        postView.translatesAutoresizingMaskIntoConstraints = false
+        
         super.layoutSubviews()
         postAuthorPhotoFrame()
         postAuthorNameFrame()
         postTextFrame()
+        postImageFrame()
+        postViewFrame()
+        postIconLikeFrame()
+        postCountLikeFrame()
+        postIconRepostFrame()
+        postCountRepostFrame()
+        postIconCommentFrame()
+        postCountCommentFrame()
+        postIconViewersFrame()
+        postCountViewersFrame()
+        
+        cellCurrentHeight()
     }
     
     
-    func update() {
-        let avatarPhoto = imageFriend.frame.size.height
-        let bodyHeight = newsText.frame.size.height
-        let heigth = 2 * insets + avatarPhoto + bodyHeight
+    func cellCurrentHeight() {
+        let heigth = imageFriend.frame.height + newsText.frame.height + newsImage.frame.height + postView.frame.height + insets * 6
         guard let index = index else { return }
         guard bounds.height != heigth else { return }
         delegate?.setHeight(heigth, index)
@@ -109,9 +82,24 @@ class NewsFeedTableViewCell: UITableViewCell {
         postTextFrame()
     }
     
+    func setNewsImage(image: UIImage) {
+        newsImage.image = image
+        postImageFrame()
+    }
+    
     private func getLabelSize(text: String, font: UIFont) -> CGSize {
         let maxWidth = bounds.width - insets * 2
         let textBlock = CGSize(width: maxWidth, height: CGFloat.greatestFiniteMagnitude)
+        let rect = text.boundingRect(with: textBlock, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
+        let width = Double(rect.size.width)
+        let height = Double(rect.size.height)
+        let size = CGSize(width: ceil(width), height: ceil(height))
+        return size
+    }
+    
+    func getDateSize(text: String, font: UIFont) -> CGSize{
+        let maxWidth = bounds.width - 5 * insets - 50
+        let textBlock = CGSize(width: maxWidth, height: (50 - 3 * insets)/2)
         let rect = text.boundingRect(with: textBlock, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
         let width = Double(rect.size.width)
         let height = Double(rect.size.height)
@@ -129,13 +117,11 @@ class NewsFeedTableViewCell: UITableViewCell {
     }
     
     private func postAuthorNameFrame() {
-        let postAuthorNameSize = getLabelSize(text: nameFriend.text!, font: nameFriend.font)
-        let postAuthorNameX = insets + self.bounds.origin.x + imageFriend.bounds.width + insetsX
-        let postAuthorNameOrig = CGPoint(x: postAuthorNameX, y: insets + 3)
-        nameFriend.frame = CGRect(origin: postAuthorNameOrig, size: postAuthorNameSize)
-        nameFriend.numberOfLines = 0
-        nameFriend.lineBreakMode = .byWordWrapping
-        nameFriend.sizeToFit()
+        let postAuthorNameSize = getDateSize(text: nameFriend.text!, font: nameFriend.font)
+        let labelX = 4 * insets + 45
+        let labelY = insets * 0.5 + 25 - postAuthorNameSize.height
+        let labelOrigin = CGPoint(x: labelX, y: labelY)
+        nameFriend.frame = CGRect(origin: labelOrigin, size: postAuthorNameSize)
     }
     
     private func postTextFrame() {
@@ -144,5 +130,89 @@ class NewsFeedTableViewCell: UITableViewCell {
         let postTextY = imageFriend.frame.origin.y + imageFriend.frame.size.height + insets
         let postTextOrigin = CGPoint(x: postTextX, y: postTextY)
         newsText.frame = CGRect(origin: postTextOrigin, size: postTextSize)
+        newsText.numberOfLines = 0
     }
+    
+    private func postImageFrame() {
+        let iconSizeLength: CGFloat = 208
+        let iconSize = CGSize(width: iconSizeLength, height: iconSizeLength)
+        let imageX = bounds.midX - iconSizeLength/2
+        let imageY = newsText.frame.origin.y + newsText.frame.size.height + insets
+        let iconOrigin = CGPoint(x: imageX, y: imageY)
+        newsImage.frame = CGRect(origin: iconOrigin, size: iconSize)
+    }
+    
+    private func postViewFrame(){
+        let viewWidth = bounds.width - insets * 2
+        let viewHeight: CGFloat  = 24
+        let viewSize = CGSize(width: viewWidth, height: viewHeight)
+        let viewY = newsImage.frame.origin.y + newsImage.frame.height + insets * 2
+        let viewOrigin = CGPoint(x: 0, y: viewY)
+        postView.frame = CGRect(origin: viewOrigin, size: viewSize)
+    }
+    
+    private func postIconLikeFrame() {
+        let postIconLikeLength: CGFloat = 24
+        let postIconLikeSize = CGSize(width: postIconLikeLength, height: postIconLikeLength)
+        let postIconLikeOrig = CGPoint(x: 20, y: 0)
+        newsIconLikes.frame = CGRect(origin: postIconLikeOrig, size: postIconLikeSize)
+    }
+    
+    private func postCountLikeFrame(){
+        let postCountLikeLength: CGFloat = 24
+        let postCountLikeSize = CGSize(width: 35, height: postCountLikeLength)
+        let postountLikeX = insets * 6
+        let postIconLikeOrig = CGPoint(x: postountLikeX, y: 0)
+        newsLikesCount.frame = CGRect(origin: postIconLikeOrig, size: postCountLikeSize)
+        newsLikesCount.textAlignment = .left
+    }
+    
+    private func postIconRepostFrame() {
+        let postIconRepostLength: CGFloat = 24
+        let postIconRepostSize = CGSize(width: postIconRepostLength, height: postIconRepostLength)
+        let postIconRepostOrig = CGPoint(x: 90, y: 0)
+        newsIconRepost.frame = CGRect(origin: postIconRepostOrig, size: postIconRepostSize)
+    }
+    
+    private func postCountRepostFrame(){
+        let postCountRepostLength: CGFloat = 24
+        let postCountRepostSize = CGSize(width: 35, height: postCountRepostLength)
+        let postCountRepostLikeX = insets * 13
+        let postCountRepostOrig = CGPoint(x: postCountRepostLikeX, y: 0)
+        newsRepostCount.frame = CGRect(origin: postCountRepostOrig, size: postCountRepostSize)
+        newsRepostCount.textAlignment = .left
+    }
+    
+    private func postIconCommentFrame() {
+        let postIconCommentLength: CGFloat = 24
+        let postIconCommentSize = CGSize(width: postIconCommentLength, height: postIconCommentLength)
+        let postIconCommentOrig = CGPoint(x: 160, y: 0)
+        newsIconComment.frame = CGRect(origin: postIconCommentOrig, size: postIconCommentSize)
+    }
+    
+    private func postCountCommentFrame(){
+        let postCountCommentLength: CGFloat = 24
+        let postCountCommentSize = CGSize(width: 35, height: postCountCommentLength)
+        let postCountCommentLikeX = insets * 20
+        let postCountCommentOrig = CGPoint(x: postCountCommentLikeX, y: 0)
+        newsCommentCount.frame = CGRect(origin: postCountCommentOrig, size: postCountCommentSize)
+        newsCommentCount.textAlignment = .left
+    }
+    
+    private func postIconViewersFrame() {
+        let postIconViewersLength: CGFloat = 24
+        let postIconViewersSize = CGSize(width: postIconViewersLength, height: postIconViewersLength)
+        let postIconViewersOrig = CGPoint(x: 300, y: 0)
+        newsIconView.frame = CGRect(origin: postIconViewersOrig, size: postIconViewersSize)
+    }
+    
+    private func postCountViewersFrame(){
+        let postCountViewersLength: CGFloat = 24
+        let postCountViewersSize = CGSize(width: 35, height: postCountViewersLength)
+        let postCountViewersLikeX = insets * 34 - 3
+        let postCountViewersOrig = CGPoint(x: postCountViewersLikeX, y: 0)
+        newsViewCount.frame = CGRect(origin: postCountViewersOrig, size: postCountViewersSize)
+        newsViewCount.textAlignment = .left
+    }
+    
 }

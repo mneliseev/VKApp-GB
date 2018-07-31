@@ -51,15 +51,13 @@ class MyGroupsTableViewController: UITableViewController {
         guard let myGroups = myGroups, let userGroupCell = cell else { return UITableViewCell() }
         let group = myGroups[indexPath.row]
 
-        userGroupCell.setNameFriend(text: group.name)
+        userGroupCell.nameGroup.text = group.name
 
         let getCacheImage = GetCacheImage(url: group.image)
         let setImageToRow = SetImageToRowTableView(cell: cell!, indexPath: indexPath, tableView: tableView)
         setImageToRow.addDependency(getCacheImage)
         queque.addOperation(getCacheImage)
         OperationQueue.main.addOperation(setImageToRow)
-        userGroupCell.imageGroup.layer.cornerRadius = 20
-        userGroupCell.imageGroup.clipsToBounds = true
         
         return userGroupCell
     }

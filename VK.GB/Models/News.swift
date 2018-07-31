@@ -30,9 +30,11 @@ class News {
             self.newsText = json["copy_history"][0]["text"].stringValue
         }
         
-        if let photoNews = json["attachments"][0]["photo"]["sizes"][3]["url"].string {
+        if let photoNews = json["attachments"][0]["photo"]["sizes"][2]["url"].string {
             self.attachmentsPhoto = photoNews
         } else if let photoNews = json["copy_history"][0]["attachments"][0]["doc"]["preview"]["photo"]["sizes"][2]["src"].string {
+            self.attachmentsPhoto = photoNews
+        } else if let photoNews = json["attachments"][0]["doc"]["preview"]["photo"]["sizes"][2]["src"].string {
             self.attachmentsPhoto = photoNews
         } else if let photoNews = json["attachments"][0]["video"]["photo_640"].string {
             self.attachmentsPhoto = photoNews

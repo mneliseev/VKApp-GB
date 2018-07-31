@@ -39,15 +39,13 @@ class AllGroupsTableViewController: UITableViewController {
         let cell = tableView.dequeueReusableCell(withIdentifier: "CellAllGroups", for: indexPath) as! AllGroupsTableViewCell
         
         let allGroup = allGroups[indexPath.row]
-        cell.setNameFriend(text: allGroup.name)
+        cell.setNameAllGroup(text: allGroup.name)
 
         let getCacheImage = GetCacheImage(url: allGroup.image)
         let setImageToRow = SetImageToRowTableView(cell: cell, indexPath: indexPath, tableView: tableView)
         setImageToRow.addDependency(getCacheImage)
         queque.addOperation(getCacheImage)
         OperationQueue.main.addOperation(setImageToRow)
-        cell.imageGroup.layer.cornerRadius = 20
-        cell.imageGroup.clipsToBounds = true
         
         return cell
     }

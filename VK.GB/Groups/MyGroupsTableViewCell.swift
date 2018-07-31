@@ -2,38 +2,27 @@ import UIKit
 
 class MyGroupsTableViewCell: UITableViewCell {
 
-    @IBOutlet weak var nameGroup: UILabel! {
-        didSet {
-            nameGroup.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
-    @IBOutlet weak var imageGroup: UIImageView! {
-        didSet {
-            imageGroup.translatesAutoresizingMaskIntoConstraints = false
-        }
-    }
+    @IBOutlet weak var nameGroup: UILabel! 
+    @IBOutlet weak var imageGroup: UIImageView!
 
     let insets: CGFloat = 5.0
     
     override func layoutSubviews() {
+        nameGroup.translatesAutoresizingMaskIntoConstraints = false
+        imageGroup.translatesAutoresizingMaskIntoConstraints = false
         super.layoutSubviews()
-        imageFriendFrame()
-        nameFriendFrame()
+        imageMyGroupFrame()
+        nameMyGroupFrame()
     }
     
-    func setNameFriend(text: String) {
+    func setNameMyGroup(text: String) {
         nameGroup.text = text
-        nameFriendFrame()
-    }
-    
-    func setImageFriend(image: UIImage) {
-        imageGroup.image = image
-        imageFriendFrame()
+        nameMyGroupFrame()
     }
     
     private func getLabelSize(text: String, font: UIFont) -> CGSize {
-        let maxWidth = bounds.width - insets * 2
-        let textBlock = CGSize(width: maxWidth, height: CGFloat.greatestFiniteMagnitude)
+        let maxWidth = bounds.width - insets * 13
+        let textBlock = CGSize(width: maxWidth, height: 40)
         let rect = text.boundingRect(with: textBlock, options: .usesLineFragmentOrigin, attributes: [NSAttributedStringKey.font: font], context: nil)
         let width = Double(rect.size.width)
         let height = Double(rect.size.height)
@@ -41,22 +30,21 @@ class MyGroupsTableViewCell: UITableViewCell {
         return size
     }
     
-    private func imageFriendFrame() {
-        let postAuthorPhotoLength: CGFloat = 50
-        let postAuthorPhotoSize = CGSize(width: postAuthorPhotoLength, height: postAuthorPhotoLength)
-        let postAuthorImgOrig = CGPoint(x: insets, y: insets)
-        imageGroup.frame = CGRect(origin: postAuthorImgOrig, size: postAuthorPhotoSize)
-        imageGroup.layer.cornerRadius = postAuthorPhotoLength / 2
+    private func imageMyGroupFrame() {
+        let imageMyGroupFrameLenght: CGFloat = 50
+        let imageMyGroupFrameSize = CGSize(width: imageMyGroupFrameLenght, height: imageMyGroupFrameLenght)
+        let imageMyGroupImgOrig = CGPoint(x: insets, y: insets)
+        imageGroup.frame = CGRect(origin: imageMyGroupImgOrig, size: imageMyGroupFrameSize)
+        imageGroup.layer.cornerRadius = imageMyGroupFrameLenght / 2
         imageGroup.clipsToBounds = true
     }
 
-    private func nameFriendFrame() {
-        let postAuthorNameSize = getLabelSize(text: nameGroup.text!, font: nameGroup.font)
-        let postAuthorNameX = insets * 3 + self.bounds.origin.x + imageGroup.bounds.width
-        let postAuthorNameOrig = CGPoint(x: postAuthorNameX, y: insets * 4)
-        nameGroup.frame = CGRect(origin: postAuthorNameOrig, size: postAuthorNameSize)
-        nameGroup.numberOfLines = 0
-        nameGroup.lineBreakMode = .byWordWrapping
-        nameGroup.sizeToFit()
+    private func nameMyGroupFrame() {
+        let nameMyGroupSize = getLabelSize(text: nameGroup.text!, font: nameGroup.font)
+        let nameMyGroupX = insets * 14
+        let nameMyGroupOrig = CGPoint(x: nameMyGroupX, y: insets * 4)
+        nameGroup.frame = CGRect(origin: nameMyGroupOrig, size: nameMyGroupSize)
+        nameGroup.numberOfLines = 1
+        nameGroup.lineBreakMode = .byTruncatingTail
     }
 }
