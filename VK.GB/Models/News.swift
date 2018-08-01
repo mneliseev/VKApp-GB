@@ -13,7 +13,7 @@ class News {
     
     var newsSourceId: Int = 0
     var postId: Int = 0
-    var newsDate: String = ""
+    var newsDate: Double = 0.0
     var newsText: String = ""
     var newsCommentsCount: Int = 0
     var newsLikesCount: Int = 0
@@ -29,6 +29,8 @@ class News {
         if newsText == "" {
             self.newsText = json["copy_history"][0]["text"].stringValue
         }
+        
+        self.newsDate = json["date"].doubleValue
         
         if let photoNews = json["attachments"][0]["photo"]["sizes"][2]["url"].string {
             self.attachmentsPhoto = photoNews
@@ -64,3 +66,4 @@ class News {
         newsPostId = json["id"].intValue
     }
 }
+

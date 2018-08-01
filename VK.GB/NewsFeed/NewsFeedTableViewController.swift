@@ -15,6 +15,13 @@ class NewsFeedTableViewController: UITableViewController {
         queque.qualityOfService = .userInteractive
         return queque
     }()
+    
+    let dateFormatter: DateFormatter = {
+        let df = DateFormatter()
+        df.dateFormat = "dd MMMM yyyy HH:mm"
+        return df
+    }()
+    var dateTextCache: [IndexPath: String] = [:]
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -90,13 +97,24 @@ class NewsFeedTableViewController: UITableViewController {
             queque.addOperation(getPostImage)
         }
         
-        cell.newsDate.text = ""
-
+        cell.newsDate.text = getCellDateText(forIndexPath: indexPath, andTimestamp: newsCell.newsDate)
+        
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func getCellDateText(forIndexPath indexPath: IndexPath, andTimestamp timestamp: Double) -> String {
+        if let stringDate = dateTextCache[indexPath] {
+            return stringDate
+        } else {
+            let date = Date(timeIntervalSince1970: timestamp)
+            let stringDate = dateFormatter.string(from: date)
+            dateTextCache[indexPath] = stringDate
+            return stringDate
+        }
     }
 }
 
