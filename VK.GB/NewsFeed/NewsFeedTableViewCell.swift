@@ -24,7 +24,6 @@ class NewsFeedTableViewCell: UITableViewCell {
     let insets: CGFloat = 10.0
     let insetsX: CGFloat = 5.0
     
-     //MARK: - Functions
     override func layoutSubviews() {
         imageFriend.translatesAutoresizingMaskIntoConstraints = false
         nameFriend.translatesAutoresizingMaskIntoConstraints = false
@@ -55,6 +54,7 @@ class NewsFeedTableViewCell: UITableViewCell {
         postCountCommentFrame()
         postIconViewersFrame()
         postCountViewersFrame()
+        postDateFrame()
         
         cellCurrentHeight()
     }
@@ -119,9 +119,17 @@ class NewsFeedTableViewCell: UITableViewCell {
     private func postAuthorNameFrame() {
         let postAuthorNameSize = getDateSize(text: nameFriend.text!, font: nameFriend.font)
         let labelX = 4 * insets + 45
-        let labelY = insets * 0.5 + 25 - postAuthorNameSize.height
+        let labelY = insets + 5
         let labelOrigin = CGPoint(x: labelX, y: labelY)
         nameFriend.frame = CGRect(origin: labelOrigin, size: postAuthorNameSize)
+    }
+    
+    private func postDateFrame() {
+        let postDateSize = getDateSize(text: newsDate.text!, font: newsDate.font)
+        let labelX = 4 * insets + 45
+        let labelY = 4 * insets + 3
+        let labelOrigin = CGPoint(x: labelX, y: labelY)
+        newsDate.frame = CGRect(origin: labelOrigin, size: postDateSize)
     }
     
     private func postTextFrame() {
@@ -214,5 +222,4 @@ class NewsFeedTableViewCell: UITableViewCell {
         newsViewCount.frame = CGRect(origin: postCountViewersOrig, size: postCountViewersSize)
         newsViewCount.textAlignment = .left
     }
-    
 }
