@@ -24,22 +24,13 @@ class NewsFeedTableViewCell: UITableViewCell {
     let insets: CGFloat = 10.0
     let insetsX: CGFloat = 5.0
     
+    override func setNeedsLayout() {
+        super.setNeedsLayout()
+        [imageFriend, nameFriend, newsDate, newsText, newsImage, newsLikesCount, newsRepostCount, newsCommentCount, newsViewCount, newsIconLikes, newsIconRepost, newsIconView, newsIconComment, postView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
+        [imageFriend, nameFriend, newsDate, newsText, newsImage, newsLikesCount, newsRepostCount, newsCommentCount, newsViewCount, newsIconLikes, newsIconRepost, newsIconView, newsIconComment, postView].forEach { $0?.backgroundColor = .white }
+    }
+    
     override func layoutSubviews() {
-        imageFriend.translatesAutoresizingMaskIntoConstraints = false
-        nameFriend.translatesAutoresizingMaskIntoConstraints = false
-        newsDate.translatesAutoresizingMaskIntoConstraints = false
-        newsText.translatesAutoresizingMaskIntoConstraints = false
-        newsImage.translatesAutoresizingMaskIntoConstraints = false
-        newsLikesCount.translatesAutoresizingMaskIntoConstraints = false
-        newsRepostCount.translatesAutoresizingMaskIntoConstraints = false
-        newsCommentCount.translatesAutoresizingMaskIntoConstraints = false
-        newsViewCount.translatesAutoresizingMaskIntoConstraints = false
-        newsIconLikes.translatesAutoresizingMaskIntoConstraints = false
-        newsIconRepost.translatesAutoresizingMaskIntoConstraints = false
-        newsIconView.translatesAutoresizingMaskIntoConstraints = false
-        newsIconComment.translatesAutoresizingMaskIntoConstraints = false
-        postView.translatesAutoresizingMaskIntoConstraints = false
-        
         super.layoutSubviews()
         postAuthorPhotoFrame()
         postAuthorNameFrame()
@@ -61,7 +52,7 @@ class NewsFeedTableViewCell: UITableViewCell {
     
     
     func cellCurrentHeight() {
-        let heigth = imageFriend.frame.height + newsText.frame.height + newsImage.frame.height + postView.frame.height + insets * 6
+        let heigth = imageFriend.frame.size.height + newsText.frame.size.height + newsImage.frame.size.height + postView.frame.size.height + insets * 6
         guard let index = index else { return }
         guard bounds.height != heigth else { return }
         delegate?.setHeight(heigth, index)

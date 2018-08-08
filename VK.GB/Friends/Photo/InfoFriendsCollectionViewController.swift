@@ -4,7 +4,7 @@ import RealmSwift
 private let reuseIdentifier = "CellFriendsInfo"
 
 class InfoFriendsCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
-
+    
     var token: NotificationToken?
     var userId = ""
     var photosFriend: Results<Photos> = {
@@ -19,7 +19,7 @@ class InfoFriendsCollectionViewController: UICollectionViewController, UICollect
         queque.qualityOfService = .userInteractive
         return queque
     }()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,24 +30,24 @@ class InfoFriendsCollectionViewController: UICollectionViewController, UICollect
         photoRequest.getPhotoUsersRequest(userId: userId, idFriend: idFriend)
         pairTableAndRealm()
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return photosFriend.count
     }
-
+    
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: reuseIdentifier, for: indexPath) as? InfoFriendsCollectionViewCell
         
         guard let friendPhotoCell = cell else { return UICollectionViewCell() }
         
         let photo = photosFriend[indexPath.row]
-
+        
         let getCacheImage = GetCacheImage(url: photo.image)
         let setImageToRow = SetImageToRowCollection(cell: friendPhotoCell, indexPath: indexPath, collectionView: collectionView)
         setImageToRow.addDependency(getCacheImage)
         queque.addOperation(getCacheImage)
         OperationQueue.main.addOperation(setImageToRow)
-
+        
         return friendPhotoCell
     }
     
@@ -63,17 +63,23 @@ class InfoFriendsCollectionViewController: UICollectionViewController, UICollect
     }
     
     func pairTableAndRealm() {
-        token = photosFriend.observe( { [weak self] (changes: RealmCollectionChange) in
-            guard let collectionView = self?.collectionView else { return }
-            switch changes {
-            case .initial:
-                collectionView.reloadData()
-            case .update:
-                collectionView.reloadData()
+        token = photosFriend.observe({ [weak self] change in
+            guard let collection = self?.collectionView else {
+                return
+            }
+            switch change {
+            case RealmCollectionChange.initial:
+                collection.reloadData()
+            case RealmCollectionChange.update(_, let delete, let insert, let update):
+                collection.performBatchUpdates({
+                    collection.deleteItems(at: delete.map { IndexPath(row: $0, section:0) })
+                    collection.insertItems(at: insert.map { IndexPath(row: $0, section:0) })
+                    collection.reloadItems(at: update.map { IndexPath(row: $0, section:0) })
+                }, completion: nil)
             case .error(let error):
                 print(error.localizedDescription)
             }
         })
     }
-
+    
 }

@@ -7,7 +7,7 @@ class VKWebViewController: UIViewController {
     
     var userId = ""
     var accessToken = VKServices.token
-
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
     @IBOutlet weak var webview: WKWebView! {
         didSet {
             webview.navigationDelegate = self
@@ -64,6 +64,18 @@ extension VKWebViewController: WKNavigationDelegate {
         userId = params["user_id"]!
         decisionHandler(.cancel)
         performSegue(withIdentifier: "segueToApp", sender: nil)
+    }
+    
+    func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
+        activityIndicator.startAnimating()
+    }
+    
+    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+        activityIndicator.stopAnimating()
+    }
+    
+    func webView(_ webView: WKWebView, didFail navigation: WKNavigation!, withError error: Error) {
+        activityIndicator.stopAnimating()
     }
 }
 

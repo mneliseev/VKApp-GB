@@ -28,4 +28,8 @@ class Friends: Object, Codable {
         case lastName = "last_name"
         case image = "photo_100"
     }
+    
+    @objc open override class func primaryKey() -> String? {
+        return "id"
+    }
 }
