@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import RealmSwift
+import Firebase
 
 //let realm = try! Realm()
 
@@ -43,6 +44,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         Realm.Configuration.defaultConfiguration = config
         let realm = try! Realm()
         
+        FirebaseApp.configure()
         return true
     }
 

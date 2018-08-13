@@ -1,9 +1,12 @@
 import UIKit
 import RealmSwift
+import Firebase
+import FirebaseDatabase
 
 class MyGroupsTableViewController: UITableViewController {
     
     var token: NotificationToken?
+    var allGroupRequest = AllGroupsRequest()
     var myGroups: Results<Group>? = {
         let realm = try! Realm()
         return realm.objects(Group.self)
@@ -42,7 +45,7 @@ class MyGroupsTableViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return myGroups?.count ?? 0
+        return myGroups!.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -82,6 +85,7 @@ class MyGroupsTableViewController: UITableViewController {
 
         let delete = UITableViewRowAction(style: .default, title: "Удалить") {_,_ in
             RealmActions.deleteGroup([self.myGroups![indexPath.row]])
+            self.allGroupRequest.leaveGroup(groupId: self.myGroups![indexPath.row].id)
         }
         share.backgroundColor = #colorLiteral(red: 0.2392156869, green: 0.6745098233, blue: 0.9686274529, alpha: 1)
         delete.backgroundColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
@@ -107,14 +111,12 @@ class MyGroupsTableViewController: UITableViewController {
 
             if let indexPath = allGroupsController.tableView.indexPathForSelectedRow {
                 let newGroup = allGroupsController.allGroups[indexPath.row]
-                if !(myGroups?.contains(where: { (element) -> Bool in
-                    if case newGroup.name = element.name {
-                        return true
-                    } else {
-                        return false
-                    }
-                }))! {
+                if !(myGroups?.contains(where: { $0.id == newGroup.id }))! {
+                    allGroupRequest.joinGroup(groupId: newGroup.id)
                     RealmActions.addGroupFromSearchToRealm([newGroup])
+                    
+                    let dbLink = Database.database().reference()
+                    dbLink.child("Новая группа").setValue(newGroup.name)
                 }
                 return
             }

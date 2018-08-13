@@ -1,5 +1,7 @@
 import UIKit
 import WebKit
+import Firebase
+import FirebaseDatabase
 
 let userDefaults = UserDefaults.standard
 
@@ -59,9 +61,15 @@ extension VKWebViewController: WKNavigationDelegate {
                 dict[key] = value
                 return dict
         }
-        
+
         VKServices.token = params["access_token"]!
         userId = params["user_id"]!
+        
+//        let userIdForFB = UserFB(id: params["user_id"]!)
+//        let data = userIdForFB.toAnyObject
+        let dbLink = Database.database().reference()
+        dbLink.child("Users").setValue(userId)
+        
         decisionHandler(.cancel)
         performSegue(withIdentifier: "segueToApp", sender: nil)
     }

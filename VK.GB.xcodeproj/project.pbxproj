@@ -21,6 +21,7 @@
 		B5116B5A20D16DF200DFD674 /* FriendsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5116B5920D16DF200DFD674 /* FriendsTableViewController.swift */; };
 		B5116B5C20D16E2D00DFD674 /* FriendsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5116B5B20D16E2D00DFD674 /* FriendsTableViewCell.swift */; };
 		B5116B5E20D16E6300DFD674 /* InfoFriendsCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5116B5D20D16E6300DFD674 /* InfoFriendsCollectionViewController.swift */; };
+		B518E5F5211F06AC00921A4D /* FBUser.swift in Sources */ = {isa = PBXBuildFile; fileRef = B518E5F4211F06AC00921A4D /* FBUser.swift */; };
 		B522599720CED5DB0052ABBD /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522599620CED5DB0052ABBD /* AppDelegate.swift */; };
 		B522599920CED5DB0052ABBD /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B522599820CED5DB0052ABBD /* LoginViewController.swift */; };
 		B522599C20CED5DB0052ABBD /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B522599A20CED5DB0052ABBD /* Main.storyboard */; };
@@ -28,6 +29,7 @@
 		B52259A120CED5DC0052ABBD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B52259A020CED5DC0052ABBD /* Assets.xcassets */; };
 		B52259A420CED5DC0052ABBD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B52259A220CED5DC0052ABBD /* LaunchScreen.storyboard */; };
 		B5258BC621078458003980AF /* PostCellHeightDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5258BC521078458003980AF /* PostCellHeightDelegate.swift */; };
+		B57AD5FE211DF235008F495A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = B57AD5FD211DF235008F495A /* GoogleService-Info.plist */; };
 		B5845C5820EB65AB003C74C8 /* RealmActions.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5845C5720EB65AB003C74C8 /* RealmActions.swift */; };
 		B5845C5B20EB7483003C74C8 /* FriendsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5845C5A20EB7483003C74C8 /* FriendsRequest.swift */; };
 		B5845C5D20EB7546003C74C8 /* MyGroupsRequset.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5845C5C20EB7546003C74C8 /* MyGroupsRequset.swift */; };
@@ -68,6 +70,7 @@
 		B5116B5920D16DF200DFD674 /* FriendsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewController.swift; sourceTree = "<group>"; };
 		B5116B5B20D16E2D00DFD674 /* FriendsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsTableViewCell.swift; sourceTree = "<group>"; };
 		B5116B5D20D16E6300DFD674 /* InfoFriendsCollectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoFriendsCollectionViewController.swift; sourceTree = "<group>"; };
+		B518E5F4211F06AC00921A4D /* FBUser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FBUser.swift; sourceTree = "<group>"; };
 		B522599320CED5DB0052ABBD /* VK.GB.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VK.GB.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B522599620CED5DB0052ABBD /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		B522599820CED5DB0052ABBD /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
@@ -77,6 +80,7 @@
 		B52259A320CED5DC0052ABBD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B52259A520CED5DC0052ABBD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		B5258BC521078458003980AF /* PostCellHeightDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PostCellHeightDelegate.swift; sourceTree = "<group>"; };
+		B57AD5FD211DF235008F495A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		B5845C5720EB65AB003C74C8 /* RealmActions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmActions.swift; sourceTree = "<group>"; };
 		B5845C5A20EB7483003C74C8 /* FriendsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FriendsRequest.swift; sourceTree = "<group>"; };
 		B5845C5C20EB7546003C74C8 /* MyGroupsRequset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyGroupsRequset.swift; sourceTree = "<group>"; };
@@ -214,6 +218,7 @@
 				B5D7F67720DD539900DFABC0 /* VKWebViewController.swift */,
 				B52259A020CED5DC0052ABBD /* Assets.xcassets */,
 				B52259A520CED5DC0052ABBD /* Info.plist */,
+				B57AD5FD211DF235008F495A /* GoogleService-Info.plist */,
 				B522599D20CED5DB0052ABBD /* VK_GB.xcdatamodeld */,
 			);
 			path = VK.GB;
@@ -240,6 +245,7 @@
 				B585EA9920DCE4AB00595ED5 /* Friends.swift */,
 				B5D92BA420E38B9000A1397D /* Photos.swift */,
 				B5FFB18C20FA49AF0046A98D /* News.swift */,
+				B518E5F4211F06AC00921A4D /* FBUser.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -338,6 +344,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B50BA87220D8F00100A01329 /* TabBar.storyboard in Resources */,
+				B57AD5FE211DF235008F495A /* GoogleService-Info.plist in Resources */,
 				B50BA87520D8F03F00A01329 /* Friends.storyboard in Resources */,
 				B50BA87720D8F04800A01329 /* Groups.storyboard in Resources */,
 				B52259A420CED5DC0052ABBD /* LaunchScreen.storyboard in Resources */,
@@ -373,16 +380,24 @@
 			inputPaths = (
 				"${SRCROOT}/Pods/Target Support Files/Pods-VK.GB/Pods-VK.GB-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
+				"${BUILT_PRODUCTS_DIR}/GTMSessionFetcher/GTMSessionFetcher.framework",
+				"${BUILT_PRODUCTS_DIR}/GoogleUtilities/GoogleUtilities.framework",
 				"${BUILT_PRODUCTS_DIR}/Realm/Realm.framework",
 				"${BUILT_PRODUCTS_DIR}/RealmSwift/RealmSwift.framework",
 				"${BUILT_PRODUCTS_DIR}/SwiftyJSON/SwiftyJSON.framework",
+				"${BUILT_PRODUCTS_DIR}/leveldb-library/leveldb.framework",
+				"${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GTMSessionFetcher.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/GoogleUtilities.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Realm.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/RealmSwift.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SwiftyJSON.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/leveldb.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/nanopb.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -420,6 +435,7 @@
 				B5116B5220D16CDB00DFD674 /* MyGroupsTableViewCell.swift in Sources */,
 				B5A2944A2102D26800D7ABCE /* SetImageToRowTableView.swift in Sources */,
 				B5845C5820EB65AB003C74C8 /* RealmActions.swift in Sources */,
+				B518E5F5211F06AC00921A4D /* FBUser.swift in Sources */,
 				B5B98B9B21016DEC00FEA732 /* GetCacheImage.swift in Sources */,
 				B585EA9A20DCE4AB00595ED5 /* Friends.swift in Sources */,
 				B5FFB18F20FA4E980046A98D /* NewsFeedRequest.swift in Sources */,

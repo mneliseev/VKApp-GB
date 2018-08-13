@@ -29,4 +29,30 @@ class AllGroupsRequest {
             }
         }
     }
+    
+    func joinGroup(groupId: Int) {
+        let pathMethod = "groups.join"
+        
+        let parameters: Parameters = [
+            "group_id" : groupId,
+            "access_token" : VKServices.token,
+            "v" : "5.80"]
+        let url = baseUrl + path + pathMethod
+        
+        Alamofire.request(url, parameters: parameters).responseData(queue: .global(qos: .userInteractive)) { response in
+        }
+    }
+    
+    func leaveGroup(groupId: Int) {
+        let pathMethod = "groups.leave"
+        
+        let parameters: Parameters = [
+            "group_id" : groupId,
+            "access_token" : VKServices.token,
+            "v" : "5.80"]
+        let url = baseUrl + path + pathMethod
+        
+        Alamofire.request(url, parameters: parameters).responseData(queue: .global(qos: .userInteractive)) { response in
+        }
+    }
 }
