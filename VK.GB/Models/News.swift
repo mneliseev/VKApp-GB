@@ -2,7 +2,7 @@ import Foundation
 import SwiftyJSON
 
 class News {
-
+    
     //Фото и название группы или пользователя
     var newsAuthor: String = ""
     var newsPhotoAuthor: String = ""
@@ -21,7 +21,7 @@ class News {
     var newsViewsCount: Int = 0
     
     init(json: JSON) {
-
+        
         newsSourceId = json["source_id"].intValue
         postId = json["post_id"].intValue
         
@@ -47,7 +47,7 @@ class News {
         } else {
             self.attachmentsPhoto = ""
         }
-       
+        
         newsCommentsCount = json["comments"]["count"].intValue
         newsLikesCount = json["likes"]["count"].intValue
         newsRepostsCount = json["reposts"]["count"].intValue
@@ -66,4 +66,6 @@ class News {
         newsPostId = json["id"].intValue
     }
 }
+
+
 

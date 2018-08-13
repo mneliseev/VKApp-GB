@@ -25,12 +25,12 @@ class NewsFeedTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        newsRequest.getNewsRequest(userId: userId, accesToken: accesToken) { [weak self] news in
-            self?.news = news
-            DispatchQueue.main.async {
-                self?.tableView.reloadData()
-            }
-        }
+//        newsRequest.getNewsRequest(userId: userId, accesToken: accesToken) { [weak self] news in
+//            self?.news = news
+//            DispatchQueue.main.async {
+//                self?.tableView.reloadData()
+//            }
+//        }
     }
     
     // MARK: - Table view data source
@@ -61,43 +61,43 @@ class NewsFeedTableViewController: UITableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewsCell", for: indexPath) as! NewsFeedTableViewCell
         
-        let newsCell = news[indexPath.section]
-
-        cell.index = indexPath
-        cell.delegate = self
-        
-        cell.setNewsText(text: newsCell.newsText)
-        cell.setPostAuthorName(text: newsCell.newsAuthor)
-        
-        cell.newsLikesCount.text = "\(newsCell.newsLikesCount)"
-        cell.newsRepostCount.text = "\(newsCell.newsRepostsCount)"
-        cell.newsCommentCount.text = "\(newsCell.newsCommentsCount)"
-        cell.newsViewCount.text = "\(newsCell.newsViewsCount)"
-        
-        if !newsCell.newsPhotoAuthor.isEmpty {
-            let getCacheImage = GetCacheImage(url: newsCell.newsPhotoAuthor)
-            let setImageToRow = SetImageToRowTableView(cell: cell, indexPath: indexPath, tableView: tableView)
-            setImageToRow.addDependency(getCacheImage)
-            queque.addOperation(getCacheImage)
-            OperationQueue.main.addOperation(setImageToRow)
-        } else {
-            cell.imageFriend.image = nil
-        }
-
-        if newsCell.attachmentsPhoto == "" {
-            cell.newsImage.isHidden = true
-        } else {
-            cell.newsImage.isHidden = false
-            let getPostImage = GetCacheImage(url: newsCell.attachmentsPhoto)
-            getPostImage.completionBlock = {
-                OperationQueue.main.addOperation {
-                    cell.newsImage.image = getPostImage.outputImage
-                }
-            }
-            queque.addOperation(getPostImage)
-        }
-        
-        cell.newsDate.text = getCellDateText(forIndexPath: indexPath, andTimestamp: newsCell.newsDate)
+//        let newsCell = news[indexPath.section]
+//
+//        cell.index = indexPath
+//        cell.delegate = self
+//        
+//        cell.setNewsText(text: newsCell.newsText)
+//        cell.setPostAuthorName(text: newsCell.newsAuthor)
+//        
+//        cell.newsLikesCount.text = "\(newsCell.newsLikesCount)"
+//        cell.newsRepostCount.text = "\(newsCell.newsRepostsCount)"
+//        cell.newsCommentCount.text = "\(newsCell.newsCommentsCount)"
+//        cell.newsViewCount.text = "\(newsCell.newsViewsCount)"
+//        
+//        if !newsCell.newsPhotoAuthor.isEmpty {
+//            let getCacheImage = GetCacheImage(url: newsCell.newsPhotoAuthor)
+//            let setImageToRow = SetImageToRowTableView(cell: cell, indexPath: indexPath, tableView: tableView)
+//            setImageToRow.addDependency(getCacheImage)
+//            queque.addOperation(getCacheImage)
+//            OperationQueue.main.addOperation(setImageToRow)
+//        } else {
+//            cell.imageFriend.image = nil
+//        }
+//
+//        if newsCell.attachmentsPhoto == "" {
+//            cell.newsImage.isHidden = true
+//        } else {
+//            cell.newsImage.isHidden = false
+//            let getPostImage = GetCacheImage(url: newsCell.attachmentsPhoto)
+//            getPostImage.completionBlock = {
+//                OperationQueue.main.addOperation {
+//                    cell.newsImage.image = getPostImage.outputImage
+//                }
+//            }
+//            queque.addOperation(getPostImage)
+//        }
+//        
+//        cell.newsDate.text = getCellDateText(forIndexPath: indexPath, andTimestamp: newsCell.newsDate)
         
         return cell
     }
