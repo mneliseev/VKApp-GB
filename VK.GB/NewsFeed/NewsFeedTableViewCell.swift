@@ -212,14 +212,14 @@ class NewsFeedTableViewCell: UITableViewCell {
     private func postIconViewersFrame() {
         let postIconViewersLength: CGFloat = 24
         let postIconViewersSize = CGSize(width: postIconViewersLength, height: postIconViewersLength)
-        let postIconViewersOrig = CGPoint(x: 300, y: 0)
+        let postIconViewersOrig = CGPoint(x: 260, y: 0)
         newsIconView.frame = CGRect(origin: postIconViewersOrig, size: postIconViewersSize)
     }
     
     private func postCountViewersFrame(){
         let postCountViewersLength: CGFloat = 24
         let postCountViewersSize = CGSize(width: 35, height: postCountViewersLength)
-        let postCountViewersLikeX = insets * 34 - 3
+        let postCountViewersLikeX = insets * 30 - 3
         let postCountViewersOrig = CGPoint(x: postCountViewersLikeX, y: 0)
         newsViewCount.frame = CGRect(origin: postCountViewersOrig, size: postCountViewersSize)
         newsViewCount.textAlignment = .left

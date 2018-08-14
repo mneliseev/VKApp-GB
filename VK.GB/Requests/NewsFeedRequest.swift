@@ -14,7 +14,7 @@ class NewsFeedRequest {
             "access_token": VKServices.token,
             "filters": "post",
             "count": "20",
-            "v":"5.60"
+            "v":"5.74"
         ]
         
         Alamofire.request(url, method: .get, parameters: parameters).validate().responseJSON(queue: .global(qos: .userInteractive)) { response in
