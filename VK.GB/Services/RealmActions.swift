@@ -75,23 +75,33 @@ class RealmActions {
             print(error)
         }
     }
-    
-    
-//    static func loadFriends() -> [Friends] {
+
+//    static func loadFriends(userId: String) -> Friends? {
 //        do {
 //            let realm = try Realm()
-//            let users = realm.objects(Friends.self)
-//            return Array(users)
+//            let users = realm.objects(Friends.self).filter("id == %@", userId)
+//            return Array(users).first
 //        } catch {
 //            print(error)
 //        }
-//        return []
+//        return nil
 //    }
-
-//    static func loadPhotosData(userId: String, idFriends: Int) -> [Photos] {
+//
+//    static func loadPhotosData(userId: String) -> Results<Photos>? {
+//        if let owner = RealmActions.loadFriends(userId: userId) {
+//            do {
+//                let realm = try Realm()
+//                return realm.objects(Photos.self).filter("owner == %@", owner)
+//            } catch {
+//                print(error)
+//            }
+//        }
+//        return nil
+//    }
+//    static func loadPhotosData() -> [Photos] {
 //        do {
 //            let realm = try Realm()
-//            let photos = realm.objects(Photos.self)
+//            let photos = realm.objects(Photos.self).filter("ownerID == %@")
 //            return Array(photos)
 //        } catch {
 //            print(error)

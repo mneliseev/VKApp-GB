@@ -18,6 +18,8 @@ class NewsFeedTableViewCell: UITableViewCell {
     @IBOutlet weak var newsIconComment: UIImageView!
     @IBOutlet weak var postView: UIView!
     
+    var attachment: News?
+    
     weak var delegate: PostCellHeightDelegate?
     var index: IndexPath?
     
@@ -28,6 +30,11 @@ class NewsFeedTableViewCell: UITableViewCell {
         super.setNeedsLayout()
         [imageFriend, nameFriend, newsDate, newsText, newsImage, newsLikesCount, newsRepostCount, newsCommentCount, newsViewCount, newsIconLikes, newsIconRepost, newsIconView, newsIconComment, postView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         [imageFriend, nameFriend, newsDate, newsText, newsImage, newsLikesCount, newsRepostCount, newsCommentCount, newsViewCount, newsIconLikes, newsIconRepost, newsIconView, newsIconComment, postView].forEach { $0?.backgroundColor = .white }
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        selectionStyle = .none
     }
     
     override func layoutSubviews() {
@@ -127,9 +134,10 @@ class NewsFeedTableViewCell: UITableViewCell {
         let postTextSize = getLabelSize(text: newsText.text!, font: newsText.font)
         let postTextX = insets
         let postTextY = imageFriend.frame.origin.y + imageFriend.frame.size.height + insets
-        let postTextOrigin = CGPoint(x: postTextX, y: postTextY)
+        let postTextOrigin = CGPoint(x: ceil(postTextX), y: ceil(postTextY))
         newsText.frame = CGRect(origin: postTextOrigin, size: postTextSize)
         newsText.numberOfLines = 0
+        newsText.backgroundColor = .white
     }
     
     private func postImageFrame() {

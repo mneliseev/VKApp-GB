@@ -9,7 +9,7 @@ class InfoFriendsCollectionViewController: UICollectionViewController, UICollect
     var userId = ""
     var photosFriend: Results<Photos> = {
         let realm = try? Realm()
-        return realm!.objects(Photos.self)
+        return realm!.objects(Photos.self).sorted(byKeyPath: "ownerID")
     }()
     var idFriend = 0
     let photoRequest = PhotosRequest()
@@ -52,7 +52,7 @@ class InfoFriendsCollectionViewController: UICollectionViewController, UICollect
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let cellSize = CGSize(width: (collectionView.bounds.width - 1)/2, height: 200)
+        let cellSize = CGSize(width: (collectionView.bounds.width - 2)/3, height: 100)
         return cellSize
     }
     

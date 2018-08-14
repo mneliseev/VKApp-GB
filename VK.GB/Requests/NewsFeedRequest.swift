@@ -13,12 +13,11 @@ class NewsFeedRequest {
         let parameters: Parameters = [
             "access_token": VKServices.token,
             "filters": "post",
-            "count": "10",
-            "v":"5.80"
+            "count": "20",
+            "v":"5.60"
         ]
         
         Alamofire.request(url, method: .get, parameters: parameters).validate().responseJSON(queue: .global(qos: .userInteractive)) { response in
-            print(response)
             switch response.result {
             case .success(let value):
                 let news = JSON(value)["response"]["items"].compactMap({ News(json: $0.1) })
