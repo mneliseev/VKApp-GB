@@ -7,9 +7,8 @@ class News {
     var newsAuthor: String = ""
     var newsPhotoAuthor: String = ""
     var newsPostId: Int = 0
-    
+
     var attachmentsPhoto: String = ""
-    var attachmentSize: String = ""
     
     var newsSourceId: Int = 0
     var postId: Int = 0
@@ -32,22 +31,22 @@ class News {
         
         self.newsDate = json["date"].doubleValue
         
-        if let photoNews = json["attachments"][0]["photo"]["sizes"][2]["url"].string {
+        if let photoNews = json["attachments"][0]["photo"]["photo_604"].string {
             self.attachmentsPhoto = photoNews
-        } else if let photoNews = json["copy_history"][0]["attachments"][0]["doc"]["preview"]["photo"]["sizes"][2]["src"].string {
+        } else if let photoNews = json["copy_history"][0]["attachments"][0]["photo"]["photo_604"].string {
+            self.attachmentsPhoto = photoNews
+        } else if let photoNews = json["attachments"][0]["link"]["photo"]["photo_604"].string {
             self.attachmentsPhoto = photoNews
         } else if let photoNews = json["attachments"][0]["doc"]["preview"]["photo"]["sizes"][2]["src"].string {
             self.attachmentsPhoto = photoNews
+        } else if let photoNews = json["copy_history"][0]["attachments"][0]["doc"]["preview"]["photo"]["sizes"][2]["src"].string {
+            self.attachmentsPhoto = photoNews
         } else if let photoNews = json["attachments"][0]["video"]["photo_640"].string {
-            self.attachmentsPhoto = photoNews
-        } else if let photoNews = json["copy_history"][0]["attachments"][0]["photo"]["sizes"][4]["url"].string {
-            self.attachmentsPhoto = photoNews
-        } else if let photoNews = json["attachments"][0]["link"]["photo"]["sizes"][5]["url"].string {
             self.attachmentsPhoto = photoNews
         } else {
             self.attachmentsPhoto = ""
         }
-        
+
         newsCommentsCount = json["comments"]["count"].intValue
         newsLikesCount = json["likes"]["count"].intValue
         newsRepostsCount = json["reposts"]["count"].intValue

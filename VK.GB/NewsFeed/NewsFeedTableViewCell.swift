@@ -18,6 +18,8 @@ class NewsFeedTableViewCell: UITableViewCell {
     @IBOutlet weak var newsIconComment: UIImageView!
     @IBOutlet weak var postView: UIView!
     
+    var attachment: News?
+    
     weak var delegate: PostCellHeightDelegate?
     var index: IndexPath?
     
@@ -28,6 +30,11 @@ class NewsFeedTableViewCell: UITableViewCell {
         super.setNeedsLayout()
         [imageFriend, nameFriend, newsDate, newsText, newsImage, newsLikesCount, newsRepostCount, newsCommentCount, newsViewCount, newsIconLikes, newsIconRepost, newsIconView, newsIconComment, postView].forEach { $0.translatesAutoresizingMaskIntoConstraints = false }
         [imageFriend, nameFriend, newsDate, newsText, newsImage, newsLikesCount, newsRepostCount, newsCommentCount, newsViewCount, newsIconLikes, newsIconRepost, newsIconView, newsIconComment, postView].forEach { $0?.backgroundColor = .white }
+    }
+    
+    override func awakeFromNib() {
+        super.awakeFromNib()
+        selectionStyle = .none
     }
     
     override func layoutSubviews() {
@@ -127,14 +134,18 @@ class NewsFeedTableViewCell: UITableViewCell {
         let postTextSize = getLabelSize(text: newsText.text!, font: newsText.font)
         let postTextX = insets
         let postTextY = imageFriend.frame.origin.y + imageFriend.frame.size.height + insets
-        let postTextOrigin = CGPoint(x: postTextX, y: postTextY)
+        let postTextOrigin = CGPoint(x: ceil(postTextX), y: ceil(postTextY))
         newsText.frame = CGRect(origin: postTextOrigin, size: postTextSize)
         newsText.numberOfLines = 0
+        newsText.backgroundColor = .white
     }
     
     private func postImageFrame() {
         let iconSizeLength: CGFloat = 208
-        let iconSize = CGSize(width: iconSizeLength, height: iconSizeLength)
+        var iconSize = CGSize(width: 0, height: 0)
+        if !newsImage.isHidden {
+            iconSize = CGSize(width: iconSizeLength, height: iconSizeLength)
+        }
         let imageX = bounds.midX - iconSizeLength/2
         let imageY = newsText.frame.origin.y + newsText.frame.size.height + insets
         let iconOrigin = CGPoint(x: imageX, y: imageY)
@@ -201,14 +212,14 @@ class NewsFeedTableViewCell: UITableViewCell {
     private func postIconViewersFrame() {
         let postIconViewersLength: CGFloat = 24
         let postIconViewersSize = CGSize(width: postIconViewersLength, height: postIconViewersLength)
-        let postIconViewersOrig = CGPoint(x: 300, y: 0)
+        let postIconViewersOrig = CGPoint(x: 260, y: 0)
         newsIconView.frame = CGRect(origin: postIconViewersOrig, size: postIconViewersSize)
     }
     
     private func postCountViewersFrame(){
         let postCountViewersLength: CGFloat = 24
         let postCountViewersSize = CGSize(width: 35, height: postCountViewersLength)
-        let postCountViewersLikeX = insets * 34 - 3
+        let postCountViewersLikeX = insets * 30 - 3
         let postCountViewersOrig = CGPoint(x: postCountViewersLikeX, y: 0)
         newsViewCount.frame = CGRect(origin: postCountViewersOrig, size: postCountViewersSize)
         newsViewCount.textAlignment = .left

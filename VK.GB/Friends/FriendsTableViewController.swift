@@ -9,7 +9,7 @@ class FriendsTableViewController: UITableViewController {
     var accessToken = ""
     var friends: Results<Friends>? = {
         let realm = try! Realm()
-        return realm.objects(Friends.self)
+        return realm.objects(Friends.self).sorted(byKeyPath: "lastName")
     }()
     
     var friendsRequest = FriendsRequest()
