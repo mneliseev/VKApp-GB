@@ -142,7 +142,10 @@ class NewsFeedTableViewCell: UITableViewCell {
     
     private func postImageFrame() {
         let iconSizeLength: CGFloat = 208
-        let iconSize = CGSize(width: iconSizeLength, height: iconSizeLength)
+        var iconSize = CGSize(width: 0, height: 0)
+        if !newsImage.isHidden {
+            iconSize = CGSize(width: iconSizeLength, height: iconSizeLength)
+        }
         let imageX = bounds.midX - iconSizeLength/2
         let imageY = newsText.frame.origin.y + newsText.frame.size.height + insets
         let iconOrigin = CGPoint(x: imageX, y: imageY)
